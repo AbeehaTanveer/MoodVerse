@@ -2,7 +2,8 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken"); // ✅ Add this
 const Profile = require("../Model/userModel");
 
-const JWT_SECRET = "your_secret_key"; // 👉 Replace this with a secure secret key or use environment variables
+
+const JWT_SECRET = process.env.JWT_SECRET;
 
 
 

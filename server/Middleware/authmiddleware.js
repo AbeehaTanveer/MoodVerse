@@ -1,7 +1,8 @@
 // server/Middleware/authMiddleware.js
 const jwt = require("jsonwebtoken");
 
-const JWT_SECRET = "your_secret_key"; // Make sure to use env variable in production
+const JWT_SECRET = process.env.JWT_SECRET;
+
 
 const verifyToken = (req, res, next) => {
   const authHeader = req.headers.authorization;
