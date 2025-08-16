@@ -6,7 +6,7 @@ const userRoutes = require("./Route/userRoute");
 const commentRoutes = require("./Route/commetRoutes");
 const reflectionRoutes = require("./Route/reflectionRoute");
 
-dotenv.config();
+require('dotenv').config({ quiet: true });
 
 const app = express();
 app.use(cors());
@@ -20,7 +20,14 @@ app.use("/api", userRoutes);
 app.use("/api", commentRoutes);
 app.use("/api/reflections", reflectionRoutes);
 
-// connect db once
-database().catch(err => console.error("DB connection error:", err));
+// Connect to database with proper error handling
+(async () => {
+  try {
+    await database();
+    console.log("Database connected successfully");
+  } catch (err) {
+    console.error("DB connection error:", err);
+  }
+})();
 
-module.exports = app;  // ✅ no app.listen on Vercel
+module.exports = app; // ✅ no app.listen on Vercel
