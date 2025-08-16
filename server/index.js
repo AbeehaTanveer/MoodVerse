@@ -30,4 +30,7 @@ app.use("/api/reflections", reflectionRoutes);
   }
 })();
 
-module.exports = app; // ✅ no app.listen on Vercel
+// ✅ Export a handler instead of the app
+module.exports = (req, res) => {
+  app(req, res);
+};
