@@ -1,32 +1,28 @@
+// server/Middleware/authMiddleware.js
 const jwt = require("jsonwebtoken");
 
-const JWT_SECRET = "your_secret_key"; 
+const JWT_SECRET = "your_secret_key"; // Make sure to use env variable in production
 
 const verifyToken = (req, res, next) => {
-  // Get token from Authorization header: "Bearer <token>"
+  const authHeader = req.headers.authorization;
+  console.log("Authorization header:", authHeader);
 
-const authHeader = req.headers.authorization;
-console.log("Authorization header:", authHeader);
+  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    return res.status(401).json({ message: "No token provided, authorization denied" });
+  }
 
-if (!authHeader || !authHeader.startsWith("Bearer ")) {
-  return res.status(401).json({ message: "No token provided, authorization denied" });
-}
+  const token = authHeader.split(" ")[1];
+  console.log("Extracted token:", token);
 
-const token = authHeader.split(" ")[1];
-console.log("Extracted token:", token);
-
-try {
-  const decoded = jwt.verify(token, JWT_SECRET);
-  console.log("Decoded JWT:", decoded);
-  req.user = { id: decoded.userId };
-  next();
-} catch (err) {
-  console.error("JWT verification failed:", err.message);
-  return res.status(403).json({ message: "Invalid or expired token" });
-}
-
-
-
+  try {
+    const decoded = jwt.verify(token, JWT_SECRET);
+    console.log("Decoded JWT:", decoded);
+    req.user = { id: decoded.userId };
+    next();
+  } catch (err) {
+    console.error("JWT verification failed:", err.message);
+    return res.status(403).json({ message: "Invalid or expired token" });
+  }
 };
 
 module.exports = verifyToken;

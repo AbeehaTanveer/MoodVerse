@@ -1,12 +1,10 @@
-// routes/reflectionRoutes.js
-const express = require('express');
+const express = require("express");
 const refelctionRoute = express.Router();
 
+const { getReflections, createReflection } = require("../Controller/reflectionController");
+const verifyToken = require("../Middleware/authMiddleware");
 
-const { getReflections, createReflection } = require('../Controller/reflectionController');
-const verifyToken = require('../Middleware/authMiddleware');
-
-refelctionRoute.get('/',verifyToken, getReflections);
-refelctionRoute.post('/', verifyToken, createReflection); // protect is optional
+refelctionRoute.get("/", verifyToken, getReflections);
+refelctionRoute.post("/", verifyToken, createReflection);
 
 module.exports = refelctionRoute;
