@@ -20,9 +20,6 @@ app.get("/", (req, res) => {
   res.send("Hello World");
 });
 
-
-
-
 app.use("/api", userRoutes);
 app.use("/api", commentRoutes);
 app.use("/api/reflections", reflectionRoutes);

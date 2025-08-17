@@ -34,21 +34,25 @@ const [isLoading, setIsLoading] = useState(true);
 const handleCreate = async () => {
   if (!newReflection.trim()) return;
 
-  // ✅ Checkpoint: Ensure user is logged in
+  // ✅ Get userId + token from localStorage
   const token = localStorage.getItem("token");
-  if (!token) {
-    console.error("No token found — user not authorized to create reflection");
-    return; // Stop here if no token
+  const userId = localStorage.getItem("id");
+
+  if (!token || !userId) {
+    console.error("User not logged in — cannot create reflection");
+    return;
   }
 
   const reflectionData = {
     text: newReflection,
+    mood: "general", // optional, you can set based on user input
+    userId,          // ✅ pass userId for backend
     date: new Date().toISOString(),
   };
 
   try {
     setIsLoading(true);
-    await api.post("/reflections", reflectionData); // Token sent automatically via interceptor
+    await api.post("/reflections", reflectionData); // token sent automatically via interceptor
     setNewReflection('');
     await fetchReflections();
     setIsModalOpen(false);
@@ -62,30 +66,39 @@ const handleCreate = async () => {
   }
 };
 
-
 const fetchReflections = async () => {
   try {
-    setIsLoading(true); // Set loading to true when starting the fetch
-    const res = await api.get("/reflections");
+    setIsLoading(true);
+
+    const userId = localStorage.getItem("id");
+    if (!userId) {
+      console.error("No userId found in localStorage");
+      setReflections([]);
+      return;
+    }
+
+    // ✅ Pass userId in query string
+    const res = await api.get(`/reflections?userId=${userId}`);
     console.log("Fetched reflections:", res.data);
+
     const data = res.data;
-    
-    // Make sure this is an array
+
     if (Array.isArray(data)) {
       setReflections(data);
     } else if (Array.isArray(data.reflections)) {
       setReflections(data.reflections);
     } else {
       console.error("Invalid reflections data:", data);
-      setReflections([]); // Fallback to empty array
+      setReflections([]);
     }
   } catch (err) {
     console.error("Error fetching reflections:", err);
-    setReflections([]); // Fallback to empty array on error
+    setReflections([]);
   } finally {
-    setIsLoading(false); // Always set loading to false when done
+    setIsLoading(false);
   }
 };
+
 
 
 
