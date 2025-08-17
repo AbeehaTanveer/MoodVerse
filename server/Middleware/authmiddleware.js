@@ -1,10 +1,11 @@
 // server/Middleware/authMiddleware.js
 const jwt = require("jsonwebtoken");
 
-const JWT_SECRET = process.env.JWT_SECRET;
+
 
 
 const verifyToken = (req, res, next) => {
+  const JWT_SECRET = process.env.JWT_SECRET;
   const authHeader = req.headers.authorization;
   console.log("Authorization header:", authHeader);
 

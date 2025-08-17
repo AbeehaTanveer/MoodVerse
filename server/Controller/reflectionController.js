@@ -8,6 +8,7 @@ exports.getReflections = async (req, res) => {
   try {
     // ✅ Checkpoint: ensure user is attached by verifyToken
     if (!req.user || !req.user.id) {
+      console.error("No user found in request:", req.user);
       return res.status(401).json({ message: "Unauthorized: No user found in request" });
     }
 
@@ -26,7 +27,10 @@ const reflections = await Reflection.find({ user: req.user.id })
 exports.createReflection = async (req, res) => {
   try {
     const { text, mood } = req.body;
+    console.log("Request body:", req.body);
     const userId = req.user.id; // if you're using auth middleware
+console.log("User from token:", req.user);
+
 
     if (!text) {
       return res.status(400).json({ message: 'Reflection text is required' });
