@@ -141,7 +141,7 @@ useEffect(() => {
         </div>
       </header>
       {/* Header */}
-      <header className="relative max-w-6xl mx-auto pt-12 px-6">
+      <div className="relative max-w-6xl mx-auto pt-12 px-6">
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -161,7 +161,7 @@ useEffect(() => {
             + Add New Reflection
           </button>
         </motion.div>
-      </header>
+      </div>
 
 
 
