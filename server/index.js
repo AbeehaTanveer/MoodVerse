@@ -9,7 +9,11 @@ const reflectionRoutes = require("./Route/reflectionRoute");
 require('dotenv').config({ quiet: true });
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: "*",       // Allow all origins
+  methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"]
+}));
 app.use(express.json());
 
 app.get("/", (req, res) => {

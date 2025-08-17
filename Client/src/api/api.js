@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const baseURL = "http://localhost:5000/api";
+const baseURL = "https://mood-verse-vcma.vercel.app/api";
 const token = localStorage.getItem("token");
 
 const api = axios.create({
