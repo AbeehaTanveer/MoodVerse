@@ -7,6 +7,6 @@ const { verifyToken } = require("../Middleware/authMiddleware");
 
 
 refelctionRoute.get("/", verifyToken, getReflections);
-refelctionRoute.post("/", verifyToken,createReflection);
+refelctionRoute.post("/",createReflection);
 
 module.exports = refelctionRoute;
