@@ -2,7 +2,7 @@ const express = require("express");
 const refelctionRoute = express.Router();
 
 const { getReflections, createReflection } = require("../Controller/reflectionController");
-const { verifyToken } = require("../Middleware/authMiddleware");
+const verifyToken  = require("../Middleware/authMiddleware");
 
 
 
