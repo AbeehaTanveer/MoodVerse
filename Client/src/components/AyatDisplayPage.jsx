@@ -422,9 +422,9 @@ useEffect(() => {
               <p className="font-medium text-gray-800 truncate">
                 {comment.author}
               </p>
-              <span className="text-xs text-gray-500">
-                {comment.timestamp}
-              </span>
+           <span className="text-xs text-gray-500">
+  {new Date(comment.timestamp).toLocaleString()}
+</span>
             </div>
             <p className="text-gray-700 mt-1">{comment.text}</p>
             <div className="flex items-center mt-2 space-x-4">

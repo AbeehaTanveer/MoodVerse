@@ -120,10 +120,16 @@ const quotes = [
   }, [isHovering]);
 
   return (
-    <div className="flex h-screen bg-[#f5f5f5] overflow-hidden font-sans">
-      {/* Futuristic animated sidebar */}
+   <div className="flex flex-col lg:flex-row h-screen bg-[#f5f5f5] overflow-hidden font-sans">
+      {/* Mobile header */}
+      <div className="lg:hidden bg-gradient-to-r from-emerald-600 to-emerald-500 p-4 text-white">
+        <h1 className="text-2xl font-light tracking-wider">QURANIC WISDOM</h1>
+        <p className="text-xs opacity-80 tracking-wider">DIVINE WORDS FOR THE MODERN SOUL</p>
+      </div>
+
+      {/* Sidebar - Hidden on mobile, shown on desktop */}
       <motion.div 
-        className="w-1/3 bg-gradient-to-br from-emerald-600 to-emerald-400 relative overflow-hidden"
+        className="hidden lg:flex lg:w-1/3 bg-gradient-to-br from-emerald-600 to-emerald-400 relative overflow-hidden"
         initial={{ x: -100 }}
         animate={{ x: 0 }}
         transition={{ duration: 0.8 }}
@@ -177,43 +183,35 @@ const quotes = [
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1 }}
           >
-            <p className="text-xs opacity-60 mb-2">SWIPE FOR MORE</p>
             <motion.div
               animate={{ x: [0, 10, 0] }}
               transition={{ duration: 2, repeat: Infinity }}
             >
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M5 12h14M12 5l7 7-7 7"/>
-              </svg>
+             
             </motion.div>
           </motion.div>
         </div>
       </motion.div>
-       
 
-      {/* Main content area - Futuristic design */}
-      <div className="w-2/3 flex items-center justify-center p-8 relative">
-        {/* Background grid */}
-          <div className="absolute inset-0 opacity-5 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxkZWZzPjxwYXR0ZXJuIGlkPSJwYXR0ZXJuIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiIHBhdHRlcm5UcmFuc2Zvcm09InJvdGF0ZSg0NSkiPjxyZWN0IHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgZmlsbD0iI2Q4YjlkOCIgLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjcGF0dGVybikiIC8+PC9zdmc+')]"></div>
+      {/* Main content area */}
+      <div className="flex-1 flex items-center justify-center p-4 lg:p-8 relative overflow-y-auto">
+        {/* Background grid - subtle on mobile, more visible on desktop */}
+        <div className="absolute inset-0 opacity-5 lg:opacity-10 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxkZWZzPjxwYXR0ZXJuIGlkPSJwYXR0ZXJuIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiIHBhdHRlcm5UcmFuc2Zvcm09InJvdGF0ZSg0NSkiPjxyZWN0IHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgZmlsbD0iI2Q4YjlkOCIgLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjcGF0dGVybikiIC8+PC9zdmc+')]"></div>
         
-
-<Link to="/">
-        <div className="fixed bottom-6 right-6 z-50">
+        {/* Home button - positioned differently on mobile */}
+        <Link to="/" className="fixed bottom-4 right-4 lg:bottom-6 lg:right-6 z-50">
           <button
-            className="p-3 bg-emerald-500 hover:bg-emerald-600 text-white rounded-full shadow-lg transition-transform duration-200 hover:scale-105"
-            title="Open Journal"
-            onClick={() => window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" })}
-            >
-   
-     <GoHome />
-
-
+            className="p-3 bg-emerald-500 hover:bg-emerald-600 text-white rounded-full shadow-lg transition-transform duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-emerald-400"
+            title="Go Home"
+            aria-label="Go Home"
+          >
+            <GoHome className="text-xl" />
           </button>
-        </div>
-              </Link>
+        </Link>
+
         <motion.div
           key={currentQuote}
-          className="text-center max-w-2xl relative z-10"
+          className="text-center w-full max-w-md lg:max-w-2xl relative z-10 px-4"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}
@@ -221,9 +219,9 @@ const quotes = [
           onHoverStart={() => setIsHovering(true)}
           onHoverEnd={() => setIsHovering(false)}
         >
-          {/* Futuristic Bismillah */}
+          {/* Bismillah - smaller on mobile */}
           <motion.div
-            className="text-5xl text-emerald-600 mb-8"
+            className="text-3xl lg:text-5xl text-emerald-600 mb-6 lg:mb-8"
             animate={{ 
               scale: [1, 1.05, 1],
               opacity: [0.8, 1, 0.8]
@@ -236,16 +234,16 @@ const quotes = [
             ﷽
           </motion.div>
           
-          {/* Quote with modern typography */}
+          {/* Quote - responsive text size */}
           <motion.div
             className="relative"
             initial={{ scale: 0.95 }}
             animate={{ scale: 1 }}
             transition={{ delay: 0.3 }}
           >
-            <div className="absolute -left-8 top-0 h-full w-1 bg-emerald-400/30"></div>
+            <div className="hidden lg:block absolute -left-8 top-0 h-full w-1 bg-emerald-400/30"></div>
             <motion.p 
-              className="text-4xl font-light text-gray-800 leading-relaxed mb-8 tracking-tight"
+              className="text-2xl lg:text-4xl font-light text-gray-800 leading-relaxed mb-6 lg:mb-8 tracking-tight"
               style={{ textShadow: '0 2px 10px rgba(0,0,0,0.05)' }}
             >
               <span className="text-emerald-600/80">"</span>
@@ -254,21 +252,21 @@ const quotes = [
             </motion.p>
           </motion.div>
           
-          {/* Modern reference */}
+          {/* Reference - adjusted padding for mobile */}
           <motion.div 
-            className="inline-block px-6 py-3 bg-emerald-600/10 rounded-full"
+            className="inline-block px-4 py-2 lg:px-6 lg:py-3 bg-emerald-600/10 rounded-full"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.9 }}
           >
-            <p className="text-sm tracking-wider text-emerald-700 font-medium">
+            <p className="text-xs lg:text-sm tracking-wider text-emerald-700 font-medium">
               {quotes[currentQuote].reference}
             </p>
           </motion.div>
           
-          {/* Futuristic navigation dots */}
+          {/* Navigation dots - smaller on mobile */}
           <motion.div 
-            className="flex justify-center mt-12 space-x-3"
+            className="flex justify-center mt-8 lg:mt-12 space-x-2 lg:space-x-3"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1.2 }}
@@ -276,13 +274,13 @@ const quotes = [
             {quotes.map((_, index) => (
               <motion.div
                 key={index}
-                className={`w-2 h-2 rounded-full cursor-pointer ${
+                className={`w-1.5 h-1.5 lg:w-2 lg:h-2 rounded-full cursor-pointer ${
                   currentQuote === index ? 'bg-emerald-600' : 'bg-gray-300'
                 }`}
                 whileHover={{ scale: 1.5 }}
                 onClick={() => setCurrentQuote(index)}
                 animate={{
-                  y: currentQuote === index ? [-3, 3, -3] : 0,
+                  y: currentQuote === index ? [-2, 2, -2] : 0,
                   opacity: currentQuote === index ? 1 : 0.6
                 }}
                 transition={{
@@ -292,15 +290,16 @@ const quotes = [
             ))}
           </motion.div>
           
-          {/* Progress indicator */}
+          {/* Progress indicator - thinner on mobile */}
           <motion.div 
-            className="mt-8 h-1 bg-gray-200 rounded-full overflow-hidden"
+            className="mt-6 lg:mt-8 h-0.5 lg:h-1 bg-gray-200 rounded-full overflow-hidden mx-auto max-w-xs lg:max-w-none"
             initial={{ width: 0 }}
             animate={{ width: '100%' }}
             transition={{ duration: 5, repeat: Infinity }}
           >
             <div className="h-full bg-emerald-500"></div>
           </motion.div>
+
         </motion.div>
       </div>
     </div>
