@@ -76,7 +76,7 @@ const duaDisplay = async () => {
           <motion.h2
             className="text-2xl md:text-3xl font-serif text-[#2e7d32] mb-4"
           >
-            This is a dua for your heart today
+       Today's dua for your heart.
           </motion.h2>
           <div className="w-24 h-1 bg-[#81c784] mx-auto rounded-full"></div>
         </motion.div>
@@ -183,13 +183,7 @@ const duaDisplay = async () => {
               Back to Home
             </motion.button>
           </Link>
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="px-6 py-2 bg-[#e8f5e9] text-[#2e7d32] rounded-full hover:bg-[#c8e6c9] transition-colors"
-          >
-            View Saved Duas
-          </motion.button>
+        
         </div>
         <p className="text-gray-500 text-sm italic">
           "Indeed, in the remembrance of Allah do hearts find rest." — Qur'an 13:28

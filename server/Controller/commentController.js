@@ -1,23 +1,30 @@
 const Comment = require('../Model/commentModel');
 
 // POST /api/comments
-const createComment = async (req, res) => {
-  try {
-    const { author, text, mood } = req.body;
 
-    // ✅ Simple validation
-    if (!author || !text || !mood) {
-      return res.status(400).json({ message: 'Author, comment text, and mood are required.' });
+// POST /api/comments
+const createComment = async (req, res) => {
+   console.log("Incoming request body:", req.body); // Add this line
+  try {
+    const { author, text, mood, ayahReference } = req.body;
+    
+
+    // Enhanced validation
+    if (!author || !text || !mood || !ayahReference) {
+      return res.status(400).json({ 
+        message: 'Author, comment text, mood, and ayah reference are required.' 
+      });
     }
 
-    // ✅ Create new comment
+    // Create new comment with all required fields
     const newComment = new Comment({
       author,
       text,
-      mood
+      mood,
+      ayahReference, // Make sure this is included
+      likes: []
     });
 
-    // ✅ Save to DB
     const savedComment = await newComment.save();
 
     res.status(201).json({
@@ -30,17 +37,19 @@ const createComment = async (req, res) => {
   }
 };
 
-
+// GET /api/comments
+// GET /api/comments
 const getComments = async (req, res) => {
   try {
-    const { mood } = req.query;
+    const { mood, ayahReference } = req.query;
 
-    let filter = {};
-    if (mood) {
-      filter.mood = mood;
-    }
+    // Build filter object
+    const filter = {};
+    if (mood) filter.mood = mood;
+    if (ayahReference) filter.ayahReference = ayahReference;
 
-    const comments = await Comment.find(filter).sort({ createdAt: -1 }); // newest first
+    const comments = await Comment.find(filter)
+      .sort({ createdAt: -1 });
 
     res.status(200).json({
       message: 'Comments fetched successfully!',
@@ -51,8 +60,6 @@ const getComments = async (req, res) => {
     res.status(500).json({ message: 'Server error while fetching comments.' });
   }
 };
-
-
 
 const likeComment = async (req, res) => {
   try {

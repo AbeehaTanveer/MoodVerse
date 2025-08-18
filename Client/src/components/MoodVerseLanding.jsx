@@ -206,6 +206,7 @@ const MoodVerseLanding = () => {
               <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
                 Discover Quranic verses that speak directly to your current emotional state.
               </p>
+              <Link to="/selection">
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -213,6 +214,7 @@ const MoodVerseLanding = () => {
               >
                 Find Your Verse Now
               </motion.button>
+              </Link>
             </motion.div>
           </Container>
         </section>
@@ -232,9 +234,10 @@ const MoodVerseLanding = () => {
                 <p className="text-gray-600">Quranic guidance for every emotion</p>
               </motion.div>
               <div className="flex justify-center space-x-6 mb-8">
+                
                 <motion.a
                   whileHover={{ y: -3 }}
-                  href="#"
+                  href="https://github.com/AbeehaTanveer"
                   className="text-gray-500 hover:text-emerald-600"
                 >
                   <span className="sr-only">GitHub</span>
@@ -244,7 +247,7 @@ const MoodVerseLanding = () => {
                 </motion.a>
                 <motion.a
                   whileHover={{ y: -3 }}
-                  href="#"
+                  href="https://www.linkedin.com/in/abeeha-zainab-363643268/"
                   className="text-gray-500 hover:text-emerald-600"
                 >
                   <span className="sr-only">LinkedIn</span>
@@ -255,7 +258,7 @@ const MoodVerseLanding = () => {
               </div>
               <div className="text-gray-500 text-sm">
                 <p>Built with ❤️ by Abeeha Zainab</p>
-                <p className="mt-2">Powered by Quran API</p>
+                {/* <p className="mt-2">Powered by Quran API</p> */}
               </div>
             </div>
           </Container>

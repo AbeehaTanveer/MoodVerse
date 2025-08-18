@@ -81,47 +81,50 @@ const toggleLike = async (commentId) => {
 };
 
 
-  const handleSubmitComment = async () => {
-    try {
-      const response = await api.post("/comments", {
-        author: user.name,
-        text: newComment,
-        mood: selectedMood || "general",
-      });
+const handleSubmitComment = async () => {
+  if (!ayah) return;
 
-      if (response.status === 201) {
-        const newCommentData = response.data.comment;
+  try {
+    const response = await api.post("/comments", {
+      author: user.name,
+      text: newComment,
+      mood: selectedMood || "general",
+      ayahReference: ayah.reference // Make sure this matches your backend
+    });
+console.log(ayah.reference, "Ayah reference in comment submission");
+    if (response.status === 201) {
+      const newCommentData = response.data.comment;
+      setComments(prev => [newCommentData, ...prev]);
+      setNewComment("");
+    }
+  } catch (error) {
+    console.error("Failed to post comment:", error);
+    alert("Failed to post comment. Please try again.");
+  }
+};
 
-        // Add the new comment to the top of the list
-        setComments((prevComments) => [newCommentData, ...prevComments]);
+const fetchComments = async (mood, ayahRef) => {
+  if (!mood || !ayahRef) return;
 
-        setNewComment("");
+  try {
+    const response = await api.get(`/comments`, {
+      params: {
+        mood: mood,
+        ayahReference: ayahRef
       }
-    } catch (error) {
-      console.error(
-        "Failed to post comment:",
-        error.response?.data || error.message
-      );
-    }
-  };
+    });
+    setComments(response.data.comments);
+  } catch (err) {
+    console.error("Error fetching comments:", err);
+  }
+};
 
-  const fetchComments = async (mood) => {
-    if (!mood) return;
+useEffect(() => {
+  if (selectedMood && ayah?.reference) {
+    fetchComments(selectedMood, ayah.reference);
+  }
+}, [selectedMood, ayah]); // Add ayah to dependency array
 
-    try {
-      const response = await api.get(`/comments?mood=${mood}`);
-      console.log("Fetched comments:", response.data.comments);
-      setComments(response.data.comments);
-    } catch (err) {
-      console.error("Error fetching comments:", err);
-    }
-  };
-
-  useEffect(() => {
-    if (selectedMood) {
-      fetchComments(selectedMood);
-    }
-  }, [selectedMood]);
 
   const ayatDisplayy = async () => {
     try {

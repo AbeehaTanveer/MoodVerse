@@ -20,6 +20,11 @@ const CommentSchema = new mongoose.Schema({
       return emojiAvatars[randomIndex];
     }
   },
+  ayahReference: {
+    type: String,
+    required: true,
+    trim: true,
+  },
   mood: {
     type: String,
     required: true,
